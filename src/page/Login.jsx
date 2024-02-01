@@ -1,83 +1,4 @@
-// import { LockOutlined, UserOutlined } from "@ant-design/icons";
-// import { Button, Checkbox, Form, Input } from "antd";
-// import { useNavigate } from "react-router-dom";
 
-// const Login = () => {
-//   const navigate = useNavigate();
-//   const onFinish = (values) => {
-//     console.log("Received values of form: ", values);
-//   };
-//   const onFinishFailed = (errorInfo) => {
-//     console.log("Failed:", errorInfo);
-//   };
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}> Login</h3>
-//       <Form
-//         style={{ textAlign: "center", marginTop: 30 }}
-//         name="normal_login"
-//         className="login-form"
-//         initialValues={{ remember: true }}
-//         onFinish={onFinish}
-//         autoComplete="off"
-//         onFinishFailed={onFinishFailed}
-//       >
-//         <Form.Item
-//           name="username"
-//           rules={[{ required: true, message: "Please input your Username!" }]}
-//         >
-//           <Input
-//             style={{ width: 300 }}
-//             prefix={<UserOutlined className="site-form-item-icon" />}
-//             placeholder="Username"
-//           />
-//         </Form.Item>
-//         <Form.Item
-//           name="password"
-//           rules={[{ required: true, message: "Please input your Password!" }]}
-//         >
-//           <Input
-//             style={{ width: 300 }}
-//             prefix={<LockOutlined className="site-form-item-icon" />}
-//             type="password"
-//             placeholder="Password"
-//           />
-//         </Form.Item>
-//         <Form.Item>
-//           <Form.Item name="remember" valuePropName="checked" noStyle>
-//             <Checkbox>Remember me</Checkbox>
-//           </Form.Item>
-
-//           <a className="login-form-forgot" href="">
-//             Forgot password
-//           </a>
-//         </Form.Item>
-
-//         <Form.Item>
-//           <Button
-//             type="primary"
-//             htmlType="submit"
-//             className="login-form-button"
-//            onClick={() => {navigate("/Home")}}
-//           >
-//             Log in
-//           </Button>
-//           <label
-//             style={{ marginLeft: 20, color: "blue" }}
-//             onClick={() => {
-//               navigate("/register");
-//             }}
-//           >
-//             Or register now!
-//           </label>
-//         </Form.Item>
-//       </Form>
-//     </>
-//   );
-// };
-
-// export default Login;
 
 import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -86,11 +7,13 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAcessToken } from '../utils/helper';
 import authService from '../Services/authService';
-
+  
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const accessToken = getAcessToken();
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("")
 
   if (accessToken) {
     return <Navigate to="/home" replace />;
@@ -112,16 +35,19 @@ const Login = () => {
       toast.success('Login successful');
       return <Navigate to="/" replace />;
     } catch (error) {
-      console.error(error.message);
+      console.error("loi r fix lai di",error.message);
       const errorMessage = error?.response?.data?.message || 'Login failed';
       toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
+ 
 
   const handleLogin = () => {
-    navigate('/home');
+    
+    navigate('/home')
+    
   };
 
   return (
@@ -140,6 +66,7 @@ const Login = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Username"
+              onChange={(e) => setUserName(e.target.value)} value={username}
             />
           </Form.Item>
           <Form.Item
@@ -155,6 +82,8 @@ const Login = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)} value={password}
+
             />
           </Form.Item>
           <Form.Item>
@@ -162,9 +91,7 @@ const Login = () => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
+
           </Form.Item>
 
           <Form.Item>

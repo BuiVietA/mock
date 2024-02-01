@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../Services/interface/authentication";
 
 const Product = () => {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ const Product = () => {
 
   const getAllProducts = async () => {
     try {
-      const response = await axios.get(
-        "https://656eef0a6529ec1c6236f71b.mockapi.io/api/api"
+      const response = await axios.get(BASE_URL+"product/get-all"
+        
       );
       setProducts(response.data);
     } catch (error) {

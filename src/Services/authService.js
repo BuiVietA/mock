@@ -1,10 +1,11 @@
 // authService.js
 import { toast } from "react-toastify";
 import instance from "./axiosClient";
+import { BASE_URL } from "./interface/authentication";
 const authService = {
   async login() {
     try {
-      const response = await instance.post("auth/login");
+      const response = await instance.post(BASE_URL+ "login-v2");
       const token = response.data.token;
 
       if (token) {

@@ -1,8 +1,9 @@
 // axiosClient.js
 import axios from "axios";
 import { getAcessToken } from "../utils/helper";
+import { BASE_URL } from "./interface/authentication";
 const instance = axios.create({
-  baseURL: "http://localhost:8080/", // base URL
+  baseURL: BASE_URL+"auth/register", // base URL
   timeout: 5000, // thời gian hết hạn call API
   headers: { "Content-Type": "application/json" },
 });
